@@ -9,7 +9,7 @@ export default function Home() {
         <div className="hero-text">
           <h2>New Balance 9060</h2>
           <p>Atitude, conforto e personalidade.</p>
-          <Link href="/produto?id=new-balance-9060" className="cta-button">
+          <Link href="/produto/new-balance-9060" className="cta-button">
             Disponível Agora <span className="arrow">→</span>
           </Link>
         </div>
@@ -24,9 +24,9 @@ export default function Home() {
         <div className="product-grid">
 
           <article className="product-card">
-            <Link href="/produto?id=new-balance-725-Sea-Salt">
+            <Link href="/produto/New-Balance-725-Sea-Salt-Phantom-Bone">
               <div className="product-image-container">
-                <Image src="https://droper-media.us-southeast-1.linodeobjects.com/1472024225712869.jpg" alt="New Balance 725 Sea Salt" width={240} height={240}/>
+                <Image src="https://lojavirus.fbitsstatic.net/img/p/tenis-new-balance-725-sea-salt-phantom-ml725ca-75623/317599.jpg?w=1200&h=1200&v=no-value" alt="New Balance 725 Sea Salt" width={240} height={240}/>
               </div>
               <h3 className="product-name">New Balance 725 Sea Salt Phantom Bone</h3>
               <div className="product-price">
@@ -37,7 +37,7 @@ export default function Home() {
           </article>
 
           <article className="product-card">
-            <Link href="/produto?id=new-balance-725-grey-matter">
+            <Link href="/produto/New-Balance-725-Black-Angora">
               <div className="product-image-container">
                 <Image src="https://droper-media.us-southeast-1.linodeobjects.com/1472024225836277.jpg" alt="New Balance 725 Grey Matter" width={240} height={240}/>
               </div>
@@ -50,7 +50,7 @@ export default function Home() {
           </article>
 
           <article className="product-card">
-            <Link href="/produto?id=new-balance-725-black-angora">
+            <Link href="/produto/New-Balance-725-Black-Angora">
               <div className="product-image-container">
                 <Image src="https://droper-media.us-southeast-1.linodeobjects.com/2820242245458.jpg" alt="New Balance 725 Black Angora" width={240} height={240}/>
               </div>
@@ -110,26 +110,31 @@ export default function Home() {
         <div className="featured-grid">
 
           <article className="featured-card">
-            <Link href="/produto?id=travis-scott-jumpman">
-              <div className="featured-image-container">
-                <Image src="/img/Jumpman.jpg" alt="Travis Scott x Air Jordan 1" width={450} height={400} />
-              </div>
-              <div className="featured-text-content">
-                <h3 className="product-name">Travis Scott x Air Jordan Jumpman Jack University Red</h3>
-                <p className="featured-description">
-                  O cobiçado reverse swoosh em uma das silhuetas mais icônicas da história.
-                </p>
-                <div className="featured-price-cta">
-                  <p className="product-price">R$ 4.699,90</p>
-                  <span className="cta-button">Ver Detalhes →</span>
+            <Link href="/produto/travis-scott-jumpman-red">
+                <div className="featured-image-container">
+                    <Image 
+                        src="/img/Jumpman.jpg" 
+                        alt="Travis Scott x Air Jordan 1" 
+                        width={450} 
+                        height={400} 
+                    />
                 </div>
-              </div>
+                <div className="featured-text-content">
+                    <h3 className="product-name">Travis Scott x Air Jordan Jumpman Jack University Red</h3>
+                    <p className="featured-description">
+                        O cobiçado reverse swoosh em uma das silhuetas mais icônicas da história.
+                    </p>
+                    <div className="featured-price-cta">
+                        <p className="product-price">R$ 4.699,90</p>
+                        <span className="cta-button">Ver Detalhes →</span>
+                    </div>
+                </div>
             </Link>
-          </article>
+        </article>
 
           <div className="side-cards-container">
             <article className="side-card">
-              <Link href="/produto?id=nike-dunk-la-dodgers">
+              <Link href="/produto/nike-dunk-la-dodgers">
                 <div className="side-card-image">
                   <Image src="https://droper-media.us-southeast-1.linodeobjects.com/3072022163851611.webp" alt="Nike SB Dunk Low LA Dodgers" width={80} height={80}/>
                 </div>
@@ -141,7 +146,7 @@ export default function Home() {
             </article>
 
             <article className="side-card">
-              <Link href="/produto?id=Tiago-Lemos-x-New-Balance-808-Tan-Aqua-Black">
+              <Link href="/produto/tiago-lemos-nb-808">
                 <div className="side-card-image">
                   <Image src="https://droper-lapse.us-southeast-1.linodeobjects.com/20250612180856190-145.webp" alt="Tiago Lemos x New Balance 808 Tan Aqua Black" width={80} height={80}/>
                 </div>
@@ -153,7 +158,7 @@ export default function Home() {
             </article>
 
             <article className="side-card">
-              <Link href="/produto?id=vans-skate-wayvee">
+              <Link href="/produto/vans-skate-wayvee">
                 <div className="side-card-image">
                   <Image src="/img/Vans.jpg" alt="Vans Skate Wayvee Black White" width={80} height={80}/>
                 </div>
@@ -165,7 +170,7 @@ export default function Home() {
             </article>
 
             <article className="side-card">
-              <Link href="/produto?id=puma-suede-xl-dark">
+              <Link href="/produto/puma-suede-xl-dark">
                 <div className="side-card-image">
                   <Image src="https://droper-lapse.us-southeast-1.linodeobjects.com/20241018194521347-854.webp" alt="Puma Suede XL Jackhammer Dark" width={80} height={80}/>
                 </div>

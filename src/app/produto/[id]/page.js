@@ -4,9 +4,12 @@ import { notFound } from 'next/navigation';
 import { useState } from 'react';
 import Image from 'next/image';
 import '../produto.css';
+import { use } from 'react'; // Importando use
 
 export default function ProdutoPage({ params }) {
-    const produto = produtos[params.id];
+    // Descompactando params usando use
+    const { id } = use(params);
+    const produto = produtos[id];
 
     if (!produto) {
         notFound();
@@ -21,7 +24,7 @@ export default function ProdutoPage({ params }) {
                 <section className="product-image-column">
                     {produto.imagens.map((imgSrc, index) => (
                         <div key={index} className="image-wrapper" onClick={() => setMainImage(imgSrc)}>
-                            <Image src={imgSrc} alt={`${produto.nome} - imagem ${index + 1}`} width={600} height={600} />
+                            <Image src={imgSrc} alt={`${produto.nome} - imagem ${index + 1}`} width={600} height={550} />
                         </div>
                     ))}
                 </section>

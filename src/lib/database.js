@@ -45,10 +45,10 @@ export const produtos = {
         descricao: "O 9060 é a mais nova expressão do estilo refinado e do design inovador da New Balance. Inspirado na estética visivelmente tecnológica e futurista da era Y2K, este modelo reinterpreta elementos clássicos da icônica série 99X com uma sensibilidade moderna e ousada.",
         destaques: ["Cabedal em malha com sobreposições de camurça premium", "Entressola de dupla densidade com amortecimento ABZORB e SBS", "Logo 'N' na lateral com um design arrojado", "Solado com padrão de diamante inspirado no clássico 860"],
         imagens: [
-            "https://droper-lapse.us-southeast-1.linodeobjects.com/20250630174812984-891.webp",
-            "https://droper-lapse.us-southeast-1.linodeobjects.com/2025063017481316-139.webp",
-            "https://droper-lapse.us-southeast-1.linodeobjects.com/20250630174812601-300.webp",
-            "https://droper-lapse.us-southeast-1.linodeobjects.com/20250630174813110-825.webp"
+            "https://newbrasil.vtexassets.com/arquivos/ids/189586/U9060_U9060CTC.jpg?v=638876183861430000",
+            "https://newbrasil.vtexassets.com/arquivos/ids/189584/U9060_U9060CTC.jpg?v=638876183750930000",
+            "https://newbrasil.vtexassets.com/arquivos/ids/189585/U9060_U9060CTC.jpg?v=638876183794900000",
+            "https://newbrasil.vtexassets.com/arquivos/ids/189587/U9060_U9060CTC.jpg?v=638876183910300000"
         ]
     },
     "new-balance-725-seasalt": {
@@ -58,7 +58,7 @@ export const produtos = {
         descricao: "Inspirado nos tênis de corrida dos anos 2000, o New Balance 725 oferece um estilo retrô que não abre mão do conforto. Sua silhueta versátil e a tecnologia de amortecimento C-CAP o tornam perfeito para o uso diário.",
         destaques: ["Estética inspirada nos runners dos anos 2000", "Entressola com amortecimento C-CAP para suporte durável", "Cabedal em material sintético e malha", "Um clássico moderno para o dia a dia"],
         imagens: [
-            "https://droper-media.us-southeast-1.linodeobjects.com/1472024225712806.jpg",
+            "https://lojavirus.fbitsstatic.net/img/p/tenis-new-balance-725-sea-salt-phantom-ml725ca-75623/317599-1.jpg?w=1200&h=1200&v=no-value",
             "https://droper-media.us-southeast-1.linodeobjects.com/1472024225712869.jpg",
             "https://droper-media.us-southeast-1.linodeobjects.com/1472024225712775.jpg",
             "https://droper-media.us-southeast-1.linodeobjects.com/1472024225713125.jpg"
@@ -101,5 +101,30 @@ export const produtos = {
             "https://droper-lapse.us-southeast-1.linodeobjects.com/20241018194521627-299.webp",
             "https://droper-lapse.us-southeast-1.linodeobjects.com/20241018194522233-285.webp"
         ]
-    }
+    },
+    "New-Balance-725-Sea-Salt-Phantom-Bone": {
+        id: "New-Balance-725-Sea-Salt-Phantom-Bone",
+        nome: "New Balance 725 Sea Salt Phantom Bone",
+        preco: "R$ 1.299,90",
+        descricao: "Com um design clássico inspirado nos anos 2000, este tênis de corrida foi desenvolvido para acompanhar seu estilo de vida ativo.",
+        destaques: ["Cabedal em malha com sobreposições de camurça premium", "Entressola de dupla densidade com amortecimento ABZORB e SBS", "Logo 'N' na lateral com um design arrojado", "Solado com padrão de diamante inspirado no clássico 860"],
+        imagens: [
+            "https://droper-media.us-southeast-1.linodeobjects.com/1472024225712806.jpg",
+            "https://droper-media.us-southeast-1.linodeobjects.com/1472024225712869.jpg",
+            "https://droper-media.us-southeast-1.linodeobjects.com/1472024225712775.jpg",
+            "https://droper-media.us-southeast-1.linodeobjects.com/1472024225713125.jpg"
+        ]
+    },
+    "New-Balance-725-Black-Angora": {
+        id: "New-Balance-725-Black-Angora",
+        nome: "New Balance 725 Black Angora'",
+        preco: "R$ 750,00",
+        descricao: "O elegante New Balance 725 foi inspirado nas silhuetas de corrida dos anos 2000 para dar um novo upgrade ao seu visual casual. Estes tênis unissex incluem amortecimento na entressola C-CAP para suporte durável com parte superior em material sintético e malha para uma sensação confortável.",
+        imagens: [
+            "https://droper-media.us-southeast-1.linodeobjects.com/2820242245398.jpg",
+            "https://droper-media.us-southeast-1.linodeobjects.com/2820242245458.jpg",
+            "https://droper-media.us-southeast-1.linodeobjects.com/2820242245493.jpg",
+            "https://droper-media.us-southeast-1.linodeobjects.com/2820242245674.jpg"
+        ]
+    },
 };
