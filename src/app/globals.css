@@ -1,0 +1,773 @@
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap');
+
+body {
+    margin: 0;
+    font-family: 'Montserrat', sans-serif;
+    background-color: #000000;
+    color: #ffffff;
+    scroll-behavior: smooth;
+    padding-top: 90px;
+}
+
+.main-header {
+    width: 100%;
+    height: 90px;
+    box-sizing: border-box;
+    display: flex; /* Adicionado para centralizar o container */
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    transition: background-color 0.4s ease, backdrop-filter 0.4s ease;
+    z-index: 1000;
+}
+.main-header .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    
+    /* As 2 linhas abaixo são a chave para manter tudo dentro da tela */
+    padding: 0 24px; /* Garante o respiro nas laterais */
+    box-sizing: border-box; /* Garante que o padding não "empurre" o layout */
+}
+.main-header.scrolled { 
+    background-color: rgba(18, 18, 18, 0.8);
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid #222;
+}
+.header-left,
+.header-right {
+    flex: 1; /* Faz com que as laterais ocupem o espaço disponível */
+    display: flex;
+    align-items: center;
+}
+.header-left {
+    justify-content: flex-start; /* Alinha o conteúdo à esquerda */
+}
+
+.header-right {
+    flex: 1;
+    display: flex;
+    align-items: center; /* <<< IMPORTANTE: Mantém o alinhamento vertical de tudo na direita */
+    justify-content: flex-end;
+    gap: 20px;
+}
+.main-nav ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 60px;
+}
+.header-icon {
+    width: 28px;
+    height: 28px;
+    cursor: pointer;
+    fill: #ffffff;
+}
+.nav-item {
+
+}
+.nav-item > a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 1.1rem;
+    padding: 33px 0;
+}
+.logo-caligrafia {
+    font-family: 'Dancing Script', cursive;
+    font-weight: 700;
+    font-size: 3.2rem;
+    color: #fff;
+    text-decoration: none;
+}
+.logo-caligrafia .letter {
+     display: inline-block; will-change: transform; 
+    }
+.btn-login {
+    background-color: #ffffff;
+    color: #000000;
+    border: none;
+    padding: 10px 24px;
+    border-radius: 50px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+.btn-login:hover { background-color: #cccccc; }
+.dropdown-content { 
+    background-color: rgba(24, 24, 24, 0.8); /* Fundo semitransparente */
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    color: #fff; 
+    position: absolute; 
+    top: 100%;
+    left: 50%; 
+    width: auto; 
+    min-width: 800px; 
+    padding: 40px; 
+    box-sizing: border-box; 
+    border-radius: 16px; 
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5); 
+    display: flex; 
+    justify-content: center; 
+    gap: 60px; 
+    opacity: 0; 
+    visibility: hidden; 
+    transform: translateX(-50%) scale(0.98);
+    transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s; 
+    pointer-events: none; 
+}
+.dropdown-content.is-active { 
+    background-color: rgba(24, 24, 24, 0.8);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    opacity: 2;
+    visibility: visible;
+    transform: translateX(-50%) scale(1);
+    pointer-events: auto; /* ADIÇÃO: Garante que os links sejam clicáveis */
+}
+.dropdown-column { text-align: center; }
+.dropdown-column h4 { margin: 0 0 15px 0; font-size: 0.9rem; font-weight: 700; color: #fff; text-transform: uppercase; letter-spacing: 1px; }
+.dropdown-column ul { list-style: none; padding: 0; margin: 0; display: flex; justify-content: center; flex-wrap: wrap; gap: 24px; }
+.dropdown-column li { margin-bottom: 0; }
+.dropdown-column a { text-decoration: none; color: #a0a0a0; transition: color 0.2s; font-size: 0.9rem; }
+.dropdown-column a:hover { color: #fff; }
+
+.page-content {
+    /* MUDANÇA: Limpamos o conteúdo antigo e preparamos para os novos blocos */
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 0; /* O padding virá das seções internas */
+}
+.header-cart {
+    position: relative;
+}
+.header-cart .header-icon {
+    fill: #ffffff;
+    stroke: #ffffff;
+    filter: drop-shadow(0 0 8px rgba(200, 200, 255, 0.5)); /* Efeito de brilho opcional */
+}
+.header-cart a {
+    position: relative; /* O contador será relativo ao link */
+    display: flex;      /* <<< A MÁGICA: Transforma o link em um container flex */
+    align-items: center;/* <<< A MÁGICA: Alinha o ícone SVG verticalmente dentro do link */
+}
+/* --- HERO BANNER STYLES --- */
+
+.hero-banner {
+    background-color: #f5f5f7; /* Cinza claro, como na referência */
+    color: #1d1d1f; /* Cor de texto escura para contraste */
+    border-radius: 20px;
+    padding: 0 60px;
+    margin-bottom: 80px; /* Espaço entre o banner e a vitrine */
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    overflow: hidden; /* Garante que a imagem não vaze para fora do raio da borda */
+}
+
+.hero-text {
+    max-width: 40%;
+}
+
+.hero-text h2 {
+    font-size: 3rem;
+    font-weight: 700;
+    margin: 0 0 10px 0;
+}
+
+.hero-text p {
+    font-size: 1.2rem;
+    margin: 0 0 30px 0;
+}
+
+.cta-button {
+    background-color: #000;
+    color: #fff;
+    text-decoration: none;
+    padding: 12px 24px;
+    border-radius: 30px;
+    font-weight: 600;
+    display: inline-block;
+    transition: transform 0.2s ease;
+}
+
+.cta-button:hover {
+    transform: scale(1.05);
+}
+
+.cta-button .arrow {
+    margin-left: 8px;
+    transition: margin-left 0.2s ease;
+}
+
+.cta-button:hover .arrow {
+    margin-left: 14px;
+}
+
+.hero-image img {
+    max-width: 550px; /* Ajuste o tamanho da imagem como preferir */
+    transform: rotate(-25deg) translateY(20px);
+}
+
+/* --- PRODUCT SHOWCASE STYLES --- */
+
+.showcase-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 30px;
+}
+
+.product-grid {
+    display: flex;
+    overflow-x: auto; /* A mágica para a rolagem horizontal */
+    gap: 24px;
+    padding-bottom: 24px; /* Espaço para a barra de rolagem não cortar os cards */
+}
+
+/* Estilização da barra de rolagem (opcional, mas recomendado) */
+.product-grid::-webkit-scrollbar {
+    height: 8px;
+}
+.product-grid::-webkit-scrollbar-track {
+    background: #222;
+    border-radius: 4px;
+}
+.product-grid::-webkit-scrollbar-thumb {
+    background: #555;
+    border-radius: 4px;
+}
+.product-grid::-webkit-scrollbar-thumb:hover {
+    background: #777;
+}
+
+.product-card {
+    width: 240px;
+    flex-shrink: 0; /* Impede que os cards sejam espremidos */
+}
+
+.product-card a {
+    text-decoration: none;
+    color: #fff;
+}
+
+.product-image-container {
+    background-color: #f5f5f7;
+    border-radius: 16px;
+    margin-bottom: 12px;
+    overflow: hidden;
+}
+
+.product-image-container img {
+    width: 100%;
+    display: block;
+    transition: transform 0.3s ease;
+}
+
+.product-card:hover .product-image-container img {
+    transform: scale(1.05);
+}
+
+.product-name {
+    font-size: 1rem;
+    font-weight: 500;
+    margin: 0 0 8px 0;
+    /* Limita o nome a 2 linhas para não quebrar o layout */
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;  
+    overflow: hidden;
+}
+
+.product-price {
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+.product-price .discount {
+    color: #28a745; /* Verde para o desconto */
+    margin-left: 8px;
+    font-size: 0.9rem;
+}
+.product-price .price-old {
+    text-decoration: line-through;
+    color: #a0a0a0;
+    font-weight: 400;
+    margin-right: 8px;
+}
+
+.product-price .price-new {
+    color: #fff;
+}
+
+.product-price .discount-percent {
+    color: #28a745;
+    background-color: rgba(40, 167, 69, 0.1);
+    padding: 2px 6px;
+    border-radius: 4px;
+    margin-left: 8px;
+    font-size: 0.9rem;
+}
+
+/* --- ESTILOS PARA O BANNER INVERTIDO (TRAVIS SCOTT) --- */
+
+.hero-banner--reversed {
+    /* Inverte a ordem visual dos elementos filhos (imagem e texto) */
+    flex-direction: row-reverse;
+    background-color: #fdefde; /* Um tom de bege/off-white (Sail) */
+}
+
+/* Alinha o texto à direita no banner invertido */
+.hero-banner--reversed .hero-text {
+    text-align: right;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end; /* Alinha o botão à direita também */
+}
+
+/* Ajusta a rotação da imagem para o lado esquerdo */
+.hero-banner--reversed .hero-image img {
+    transform: rotate(25deg) translateY(20px) scaleX(-1); /* Invertemos a imagem horizontalmente */
+}
+/* --- CARD GRID SECTION (DESTAQUE + MINI CARDS) --- */
+
+.featured-grid {
+    display: grid;
+    /* Cria um layout de 2 colunas: a primeira ocupa 2x o espaço da segunda */
+    grid-template-columns: 2fr 1fr;
+    gap: 24px;
+}
+
+/* Card de Destaque (o maior, à esquerda) */
+.featured-card {
+    background-color: #f5f5f7;
+    color: #1d1d1f;
+    border-radius: 20px;
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.featured-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 15px 30px rgba(255, 255, 255, 0.05);
+}
+
+.featured-card a {
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.featured-image-container {
+    width: 100%;
+    flex-grow: 1; /* Faz a imagem ocupar o espaço disponível */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.featured-image-container img {
+    width: 100%;
+    max-height: 350px;
+    object-fit: contain;
+    transform: rotate(-15deg);
+    transition: transform 0.3s ease;
+}
+
+.featured-card:hover .featured-image-container img {
+    transform: rotate(0deg) scale(1.05);
+}
+
+.featured-text-content {
+    padding-top: 20px;
+}
+
+.featured-text-content .product-name {
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin: 0 0 8px 0;
+}
+
+.featured-description {
+    font-size: 1rem;
+    color: #6e6e73;
+    margin: 0 0 20px 0;
+}
+
+.featured-price-cta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid #e0e0e0;
+    padding-top: 20px;
+}
+
+.featured-price-cta .product-price {
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin: 0;
+}
+
+.cta-featured {
+    background-color: #000;
+    color: #fff;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-weight: 500;
+    font-size: 0.9rem;
+}
+
+/* Container dos Cards Menores (à direita) */
+.side-cards-container {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.side-card {
+    background-color: #f5f5f7;
+    color: #1d1d1f;
+    border-radius: 20px;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.side-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 15px 30px rgba(255, 255, 255, 0.05);
+}
+
+.side-card a {
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    gap: 15px;
+}
+
+.side-card-image {
+    width: 80px;
+    flex-shrink: 0;
+}
+
+.side-card-image img {
+    width: 100%;
+    object-fit: contain;
+}
+
+.side-card-text .product-name {
+    font-size: 1rem;
+    font-weight: 600;
+    margin: 0 0 5px 0;
+}
+
+.side-card-text .product-price {
+    font-size: 1rem;
+    font-weight: 500;
+}
+
+/* Responsividade para telas menores */
+@media (max-width: 992px) {
+    .featured-grid {
+        /* Em telas menores, os cards empilham em vez de ficarem lado a lado */
+        grid-template-columns: 1fr;
+    }
+}
+/* ==========================================================================
+   --- INÍCIO DOS ESTILOS RESPONSIVOS ---
+   Estes estilos só serão aplicados em telas com 992px de largura ou menos.
+   ========================================================================== */
+
+@media (max-width: 992px) {
+
+    /* --- AJUSTES GERAIS --- */
+    body {
+        /* Reduz o padding do topo no mobile para o header não ficar tão distante */
+        padding-top: 80px;
+    }
+
+    .page-content {
+        /* Adiciona um espaçamento lateral para o conteúdo não colar nas bordas */
+        padding: 0 20px;
+    }
+
+
+    /* --- AJUSTES NO CABEÇALHO --- */
+    .main-header {
+        height: 80px; /* Um pouco menor no mobile */
+        padding: 0 20px;
+        /* Alinha o único item que sobrará (a navegação) no centro */
+        justify-content: center;
+    }
+
+    /* Esconde os elementos laterais do header */
+    .header-left,
+.header-right {
+    flex: 1; /* Faz com que as laterais ocupem o espaço disponível */
+    display: flex;
+    align-items: center;
+}
+    
+    /* DENTRO da navegação, esconde os links, mas mantém o logo */
+    .main-nav .nav-item {
+        display: none;
+    }
+    
+    /* Remove o espaçamento da lista da navegação */
+    .main-nav ul {
+        gap: 0;
+    }
+
+    .logo-caligrafia {
+        font-size: 2.5rem; /* Reduz um pouco o logo para caber melhor */
+        margin: 0;
+    }
+
+
+    /* --- AJUSTES NOS BANNERS --- */
+    .hero-banner {
+        flex-direction: column; /* Empilha o texto e a imagem */
+        padding: 40px 20px;
+        text-align: center;
+    }
+
+    .hero-banner .hero-text,
+    .hero-banner--reversed .hero-text {
+        max-width: 100%;
+        align-items: center;
+        order: 2; /* O texto sempre virá depois da imagem no mobile */
+    }
+
+    .hero-banner .hero-image {
+        order: 1; /* A imagem sempre virá antes do texto */
+    }
+    
+    .hero-text h2 { font-size: 2.2rem; }
+    .hero-text p { font-size: 1rem; }
+
+    .hero-image img,
+    .hero-banner--reversed .hero-image img {
+        transform: none; /* Remove a rotação das imagens no mobile */
+        max-width: 90%;
+        margin-bottom: 30px;
+    }
+
+    /* Ajuste específico para o banner invertido no mobile */
+    .hero-banner--reversed {
+        flex-direction: column;
+    }
+    .hero-banner--reversed .hero-text {
+        text-align: center;
+    }
+
+
+    /* --- AJUSTES NAS SEÇÕES DE PRODUTOS --- */
+    .showcase-title {
+        font-size: 2rem;
+        text-align: center;
+    }
+    
+    /* A vitrine com rolagem horizontal (.product-grid) já é responsiva! Não precisa de mudanças. */
+
+    /* A grade de Destaque + Cards de Apoio vai empilhar verticalmente */
+    .featured-grid {
+        grid-template-columns: 1fr; /* Muda de 2 colunas para apenas 1 */
+    }
+
+    /* O grid de 4 cards (.card-grid) já é responsivo por causa do 'auto-fit'! Não precisa de mudanças. */
+}
+/* --- FOOTER STYLES --- */
+
+.main-footer {
+    background-color: #181818;
+    color: #a0a0a0;
+    padding: 60px 0 0 0;
+    font-size: 0.9rem;
+}
+
+.footer-main {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 40px;
+    padding-bottom: 40px;
+}
+
+.footer-column h4 {
+    color: #ffffff;
+    font-size: 1rem;
+    font-weight: 600;
+    margin: 0 0 15px 0;
+}
+
+.footer-column ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.footer-column li {
+    margin-bottom: 10px;
+}
+
+.footer-column a {
+    color: #a0a0a0;
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.footer-column a:hover {
+    color: #ffffff;
+}
+
+.social-links {
+    display: flex;
+    gap: 16px;
+}
+
+.social-links a svg {
+    width: 24px;
+    height: 24px;
+    fill: #a0a0a0;
+    transition: fill 0.2s ease;
+}
+
+.social-links a:hover svg {
+    fill: #ffffff;
+}
+
+.footer-bottom {
+    border-top: 1px solid #333;
+}
+
+.footer-bottom .container {
+    padding-top: 20px;
+    padding-bottom: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap; 
+    gap: 20px;
+}
+
+.copyright {
+    margin: 0;
+}
+
+/* --- AJUSTES NO FOOTER MOBILE --- */
+    .footer-main {
+        text-align: center;
+    }
+    .social-links {
+        justify-content: center;
+    }
+    .footer-bottom .container {
+        flex-direction: column-reverse;
+        justify-content: center;
+        text-align: center;
+    }
+
+    .payment-methods {
+    display: flex;        /* Alinha os itens na horizontal (lado a lado) */
+    align-items: center;  /* Centraliza os itens verticalmente */
+    gap: 8px;             /* Cria um pequeno espaço entre o texto e o ícone */
+}
+
+.payment-methods p {
+    margin: 0; /* Remove a margem padrão do parágrafo para um alinhamento perfeito */
+}
+
+/* --- Estilos para o Header Direito e o Carrinho --- */
+
+/* Ajusta o container para alinhar o novo ícone e o botão */
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem; /* Espaçamento entre o carrinho e o botão de login */
+}
+
+/* Estilo do botão do carrinho */
+.cart-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    position: relative; /* Posição relativa para ancorar o contador */
+    padding: 0;
+    color: var(--text-color); /* Use a cor de texto padrão do seu site */
+}
+
+/* Estilo do ícone SVG do carrinho */
+.cart-icon {
+    width: 26px;
+    height: 26px;
+    transition: color 0.3s ease;
+}
+
+.cart-button:hover .cart-icon {
+    color: var(--primary-color); /* Muda a cor do ícone no hover, usando sua cor primária */
+}
+.cart-counter {
+    /* Posicionamento */
+    position: absolute;
+    top: -6px;
+    right: -8px;
+
+    /* Estilo do Círculo */
+    background-color: #ff3b30;
+    border-radius: 50%;
+    border: 2px solid #000; /* Borda preta para criar separação */
+
+    /* Tamanho */
+    width: 20px;
+    height: 20px;
+
+    /* Estilo do Texto (Número) */
+    color: #fff;
+    font-size: 12px;
+    font-weight: 700;
+    line-height: 1;
+
+    /* Alinhamento do número dentro do círculo */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Estilo do contador de itens (a "bolinha" com o número) */
+#cart-count {
+    position: absolute;
+    top: -8px;      /* Posição acima do ícone */
+    right: -8px;    /* Posição à direita do ícone */
+    
+    background-color: var(--primary-color); /* Usa sua cor primária para destaque */
+    color: #ffffff; /* Cor do texto do contador */
+    
+    width: 20px;
+    height: 20px;
+    border-radius: 50%; /* Para ficar um círculo perfeito */
+    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    font-size: 12px;
+    font-weight: bold;
+    line-height: 1;
+}
