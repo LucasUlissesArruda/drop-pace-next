@@ -117,4 +117,4 @@ drop-pace-next/
 ├── next.config.mjs
 ├── package-lock.json
 ├── package.json
-└── README.md [![React](https://img.shields.io/badge/React-19.1.0-blue?style=flat-square&logo=react&logoColor=61DAFB)](https://react.dev/) [![ESLint](https://img.shields.io/badge/ESLint-Configured-4B32C3?style=flat-square&logo=eslint)](https://eslint.org/)
+└── README.md 
