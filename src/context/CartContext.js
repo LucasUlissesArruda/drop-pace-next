@@ -6,11 +6,8 @@ const CartContext = createContext();
 
 export function CartProvider({ children }) {
     const [cart, setCart] = useState([]);
-    
-    // Estado para controlar a notificação "Toast"
-    const [toast, setToast] = useState({ visible: false, message: '' });
+    const [showOverlay, setShowOverlay] = useState(false);
 
-    // Carregar do localStorage ao iniciar
     useEffect(() => {
         if (typeof window !== 'undefined') {
             const storedCart = localStorage.getItem('drop-pace-cart');
@@ -20,48 +17,38 @@ export function CartProvider({ children }) {
         }
     }, []);
 
-    // Salvar no localStorage sempre que o carrinho mudar
     useEffect(() => {
         if (typeof window !== 'undefined') {
             localStorage.setItem('drop-pace-cart', JSON.stringify(cart));
         }
     }, [cart]);
 
-    // Função para mostrar a notificação
-    const showToast = (message) => {
-        setToast({ visible: true, message });
+    const triggerOverlay = () => {
+        setShowOverlay(true);
         setTimeout(() => {
-            setToast({ visible: false, message: '' });
-        }, 3000);
+            setShowOverlay(false);
+        }, 1200);
     };
 
     const addToCart = (product, size, quantity = 1) => {
         setCart((prevCart) => {
-            // Verifica se o item já existe
             const existingItemIndex = prevCart.findIndex(
                 (item) => item.id === product.id && item.size === size
             );
 
             if (existingItemIndex > -1) {
-                // CORREÇÃO CRÍTICA AQUI:
-                // Antes, estávamos editando o item original. Agora criamos uma cópia.
                 const newCart = [...prevCart];
                 const itemAtual = newCart[existingItemIndex];
-
                 newCart[existingItemIndex] = {
                     ...itemAtual,
                     quantity: itemAtual.quantity + quantity
                 };
-                
                 return newCart;
             } else {
-                // Se não existe, adiciona novo
                 return [...prevCart, { ...product, size, quantity }];
             }
         });
-        
-        // Chama a notificação
-        showToast(`Boa! ${product.nome} adicionado.`);
+        triggerOverlay();
     };
 
     const removeFromCart = (productId, size) => {
@@ -70,22 +57,34 @@ export function CartProvider({ children }) {
         );
     };
 
+    // --- NOVA FUNÇÃO: LIMPAR CARRINHO ---
+    const clearCart = () => {
+        setCart([]);
+        if (typeof window !== 'undefined') {
+            localStorage.removeItem('drop-pace-cart');
+        }
+    };
+
     const cartCount = cart.reduce((acc, item) => acc + item.quantity, 0);
 
     return (
-        <CartContext.Provider value={{ cart, addToCart, removeFromCart, cartCount }}>
+        // Adicionamos 'clearCart' aqui no value para ficar acessível
+        <CartContext.Provider value={{ cart, addToCart, removeFromCart, clearCart, cartCount }}>
             {children}
             
-            {/* O Componente Visual do Toast */}
-            <div className={`toast-notification ${toast.visible ? 'show' : ''}`}>
-                <div className="toast-content">
-                    {/* Ícone de Check em SVG */}
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#00ff88" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
-                        <polyline points="20 6 9 17 4 12"></polyline>
-                    </svg>
-                    <span>{toast.message}</span>
+            {/* OVERLAY DE "ADICIONADO AO CARRINHO" */}
+            <div className={`added-overlay ${showOverlay ? 'active' : ''}`}>
+                <div className="overlay-center-box">
+                    <div className="bag-animation-container">
+                         <svg className="bag-svg" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <rect className="drop-box" x="35" y="-30" width="30" height="20" rx="2" fill="#00ff88"/>
+                            <path className="bag-body" d="M20 30H80L75 90H25L20 30Z" stroke="white" strokeWidth="4" fill="#111"/>
+                            <path className="bag-handle" d="M35 30V20C35 11.7157 41.7157 5 50 5C58.2843 5 65 11.7157 65 20V30" stroke="white" strokeWidth="4" strokeLinecap="round"/>
+                        </svg>
+                    </div>
+                    <h2>PRODUTO ADICIONADO!</h2>
+                    <p>Já está na tua sacola.</p>
                 </div>
-                <div className={`toast-progress ${toast.visible ? 'active' : ''}`}></div>
             </div>
         </CartContext.Provider>
     );
