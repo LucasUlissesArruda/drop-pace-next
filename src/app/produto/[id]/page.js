@@ -84,7 +84,6 @@ export default function ProdutoPage({ params }) {
                             >
                                 Adicionar ao Carrinho
                             </button>
-                            <button className="btn-buy-now">Comprar Agora</button>
                         </div>
 
                         <div className="product-description">
