@@ -14,8 +14,13 @@ export default function CheckoutPage() {
     const [isProcessing, setIsProcessing] = useState(false);
     const [isSuccess, setIsSuccess] = useState(false);
     
-    // NOVO ESTADO: Para o nome no cartão ser dinâmico
+    // --- ESTADOS DOS CAMPOS (Para controlar o que é digitado) ---
     const [cardName, setCardName] = useState('');
+    const [cardNumber, setCardNumber] = useState('');
+    const [cardExpiry, setCardExpiry] = useState('');
+    const [cardCvv, setCardCvv] = useState('');
+    const [cep, setCep] = useState('');
+    const [phone, setPhone] = useState('');
 
     useEffect(() => {
         if (cart.length === 0 && !isSuccess) {
@@ -27,7 +32,48 @@ export default function CheckoutPage() {
     const subtotal = cart.reduce((acc, item) => acc + (parseCurrency(item.preco) * item.quantity), 0);
     const total = subtotal;
 
-    // --- Confete Sutil e Centralizado ---
+    // --- FUNÇÕES DE MÁSCARA (A Mágica acontece aqui) ---
+    
+    // Formata: 00000-000
+    const handleCepChange = (e) => {
+        let val = e.target.value.replace(/\D/g, ''); // Remove tudo o que não é número
+        if (val.length > 8) val = val.slice(0, 8); // Limita tamanho
+        if (val.length > 5) val = val.replace(/^(\d{5})(\d)/, '$1-$2'); // Adiciona o traço
+        setCep(val);
+    };
+
+    // Formata: (11) 90000-0000
+    const handlePhoneChange = (e) => {
+        let val = e.target.value.replace(/\D/g, '');
+        if (val.length > 11) val = val.slice(0, 11);
+        if (val.length > 2) val = val.replace(/^(\d{2})(\d)/, '($1) $2');
+        if (val.length > 7) val = val.replace(/(\d{5})(\d)/, '$1-$2');
+        setPhone(val);
+    };
+
+    // Formata: 0000 0000 0000 0000
+    const handleCardNumberChange = (e) => {
+        let val = e.target.value.replace(/\D/g, '');
+        if (val.length > 16) val = val.slice(0, 16);
+        val = val.replace(/(\d{4})(?=\d)/g, '$1 '); // Espaço a cada 4 dígitos
+        setCardNumber(val);
+    };
+
+    // Formata: MM/AA
+    const handleCardExpiryChange = (e) => {
+        let val = e.target.value.replace(/\D/g, '');
+        if (val.length > 4) val = val.slice(0, 4);
+        if (val.length > 2) val = val.replace(/^(\d{2})(\d)/, '$1/$2'); // Adiciona a barra
+        setCardExpiry(val);
+    };
+
+    // Limita CVV a 3 ou 4 dígitos
+    const handleCvvChange = (e) => {
+        let val = e.target.value.replace(/\D/g, '');
+        if (val.length > 4) val = val.slice(0, 4);
+        setCardCvv(val);
+    };
+
     const fireSubtleConfetti = () => {
         confetti({
             particleCount: 100,
@@ -51,12 +97,7 @@ export default function CheckoutPage() {
             setIsSuccess(true);
             clearCart(); 
             fireSubtleConfetti();
-            
-            window.scrollTo({
-                top: 0,
-                behavior: 'smooth'
-            });
-            
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         }, 2000);
     };
 
@@ -71,7 +112,7 @@ export default function CheckoutPage() {
                         </svg>
                     </div>
                     <h1>Pagamento Confirmado!</h1>
-                    <p>Obrigado pela tua compra. O teu pedido #DP-{Math.floor(Math.random() * 10000)} foi recebido e está a ser preparado.</p>
+                    <p>Obrigado pela tua compra. O teu pedido #DP-{Math.floor(Math.random() * 10000)} foi recebido.</p>
                     <Link href="/" className="btn-back-home">Voltar à Loja</Link>
                 </div>
             </div>
@@ -107,10 +148,28 @@ export default function CheckoutPage() {
                                 </div>
                                 <div className="input-row">
                                     <input type="text" placeholder="Cidade" required className="input-field" />
-                                    <input type="text" placeholder="CEP" required className="input-field" />
+                                    
+                                    {/* CAMPO CEP COM MÁSCARA */}
+                                    <input 
+                                        type="text" 
+                                        placeholder="CEP (00000-000)" 
+                                        required 
+                                        className="input-field"
+                                        value={cep}
+                                        onChange={handleCepChange}
+                                        inputMode="numeric"
+                                    />
                                 </div>
                                 <div className="input-group">
-                                    <input type="tel" placeholder="Telefone" required className="input-field full" />
+                                    {/* CAMPO TELEFONE COM MÁSCARA */}
+                                    <input 
+                                        type="tel" 
+                                        placeholder="Telefone (11) 90000-0000" 
+                                        required 
+                                        className="input-field full" 
+                                        value={phone}
+                                        onChange={handlePhoneChange}
+                                    />
                                 </div>
                             </section>
 
@@ -120,26 +179,60 @@ export default function CheckoutPage() {
                                 <div className="payment-box">
                                     <div className="card-mockup">
                                         <div className="card-chip"></div>
-                                        <div className="card-number">•••• •••• •••• 4242</div>
+                                        {/* Número do cartão dinâmico */}
+                                        <div className="card-number">
+                                            {cardNumber || '•••• •••• •••• ••••'}
+                                        </div>
                                         <div style={{display: 'flex', justifyContent: 'space-between', marginTop: '20px', color: '#aaa', fontSize: '0.8rem'}}>
                                             <span>Nome do Titular</span>
                                             <span>Validade</span>
                                         </div>
                                         <div style={{display: 'flex', justifyContent: 'space-between', color: '#fff', fontWeight: '600', textTransform: 'uppercase'}}>
-                                            {/* AQUI ESTÁ A MÁGICA: Mostra o estado ou um texto padrão */}
-                                            <span>{cardName || 'SEU NOME AQUI'}</span>
-                                            <span>12/28</span>
+                                            <span>{cardName || 'SEU NOME'}</span>
+                                            {/* Validade dinâmica */}
+                                            <span>{cardExpiry || 'MM/AA'}</span>
                                         </div>
                                     </div>
+                                    
                                     <div className="input-group">
-                                        <input type="text" placeholder="Número do Cartão" required className="input-field full" />
+                                        {/* CARTÃO COM MÁSCARA */}
+                                        <input 
+                                            type="text" 
+                                            placeholder="Número do Cartão" 
+                                            required 
+                                            className="input-field full" 
+                                            value={cardNumber}
+                                            onChange={handleCardNumberChange}
+                                            maxLength={19}
+                                            inputMode="numeric"
+                                        />
                                     </div>
                                     <div className="input-row">
-                                        <input type="text" placeholder="Validade (MM/AA)" required className="input-field" />
-                                        <input type="text" placeholder="CVV" required className="input-field" />
+                                        {/* VALIDADE COM MÁSCARA */}
+                                        <input 
+                                            type="text" 
+                                            placeholder="Validade (MM/AA)" 
+                                            required 
+                                            className="input-field" 
+                                            value={cardExpiry}
+                                            onChange={handleCardExpiryChange}
+                                            maxLength={5}
+                                            inputMode="numeric"
+                                        />
+                                        
+                                        {/* CVV COM MÁSCARA */}
+                                        <input 
+                                            type="text" 
+                                            placeholder="CVV" 
+                                            required 
+                                            className="input-field" 
+                                            value={cardCvv}
+                                            onChange={handleCvvChange}
+                                            maxLength={4}
+                                            inputMode="numeric"
+                                        />
                                     </div>
                                     <div className="input-group">
-                                        {/* AQUI LIGAMOS O INPUT AO ESTADO */}
                                         <input 
                                             type="text" 
                                             placeholder="Nome no Cartão" 
