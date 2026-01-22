@@ -13,6 +13,9 @@ export default function CheckoutPage() {
     
     const [isProcessing, setIsProcessing] = useState(false);
     const [isSuccess, setIsSuccess] = useState(false);
+    
+    // NOVO ESTADO: Para o nome no cartão ser dinâmico
+    const [cardName, setCardName] = useState('');
 
     useEffect(() => {
         if (cart.length === 0 && !isSuccess) {
@@ -30,7 +33,7 @@ export default function CheckoutPage() {
             particleCount: 100,
             spread: 70,
             origin: { y: 0.6 },
-            colors: ['#FFD700', '#C0C0C0', '#ffffff'],
+            colors: ['#00ff88', '#ffffff', '#111111'],
             ticks: 200,
             gravity: 1.2,
             decay: 0.94,
@@ -48,9 +51,7 @@ export default function CheckoutPage() {
             setIsSuccess(true);
             clearCart(); 
             fireSubtleConfetti();
-
-            // --- A CORREÇÃO MÁGICA ---
-            // Leva a tela suavemente para o topo
+            
             window.scrollTo({
                 top: 0,
                 behavior: 'smooth'
@@ -124,8 +125,9 @@ export default function CheckoutPage() {
                                             <span>Nome do Titular</span>
                                             <span>Validade</span>
                                         </div>
-                                        <div style={{display: 'flex', justifyContent: 'space-between', color: '#fff', fontWeight: '600'}}>
-                                            <span>LUCAS SILVA</span>
+                                        <div style={{display: 'flex', justifyContent: 'space-between', color: '#fff', fontWeight: '600', textTransform: 'uppercase'}}>
+                                            {/* AQUI ESTÁ A MÁGICA: Mostra o estado ou um texto padrão */}
+                                            <span>{cardName || 'SEU NOME AQUI'}</span>
                                             <span>12/28</span>
                                         </div>
                                     </div>
@@ -137,7 +139,16 @@ export default function CheckoutPage() {
                                         <input type="text" placeholder="CVV" required className="input-field" />
                                     </div>
                                     <div className="input-group">
-                                        <input type="text" placeholder="Nome no Cartão" required className="input-field full" />
+                                        {/* AQUI LIGAMOS O INPUT AO ESTADO */}
+                                        <input 
+                                            type="text" 
+                                            placeholder="Nome no Cartão" 
+                                            required 
+                                            className="input-field full"
+                                            value={cardName}
+                                            onChange={(e) => setCardName(e.target.value)}
+                                            maxLength={26}
+                                        />
                                     </div>
                                 </div>
                             </section>
