@@ -607,6 +607,61 @@ body {
     100% { transform: scale(1, 1); }
 }
 
+.minimal-warning {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    
+    background-color: #1a1a1a;
+    color: #fff;
+    
+    padding: 16px 28px; 
+    
+    /* MUDANÇA AQUI: De 50px para 12px */
+    border-radius: 12px; 
+    
+    border: 1px solid #333;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.4);
+    
+    display: flex;
+    align-items: center;
+    gap: 16px; 
+    
+    font-size: 1.05rem; 
+    font-weight: 600; 
+    
+    z-index: 100000;
+    
+    /* Animação */
+    transform: translateY(20px);
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.minimal-warning.show {
+    transform: translateY(0);
+    opacity: 1;
+    visibility: visible;
+}
+
+.warning-icon {
+    width: 28px;
+    height: 28px;
+    
+    background-color: #ff3b30;
+    color: #fff;
+    
+    /* MUDANÇA AQUI TAMBÉM: De 50% (círculo) para 6px (quadrado suave) */
+    border-radius: 6px; 
+    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 800;
+    font-size: 16px;
+}
+
 /* ==========================================================================
    --- INÍCIO DOS ESTILOS RESPONSIVOS ---
    Estes estilos só serão aplicados em telas com 992px de largura ou menos.

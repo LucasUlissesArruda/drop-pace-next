@@ -103,9 +103,12 @@ export default function CarrinhoPage() {
                             <span>{formatCurrency(total)}</span>
                         </div>
 
-                        <button className="btn-checkout-final">
-                            Finalizar Compra
-                        </button>
+                        {/* AQUI ESTAVA O PROBLEMA: Adicionei o Link em volta do botão */}
+                        <Link href="/checkout" style={{ textDecoration: 'none' }}>
+                            <button className="btn-checkout-final">
+                                Finalizar Compra
+                            </button>
+                        </Link>
                         
                         <p className="secure-text">
                             <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" viewBox="0 0 16 16">

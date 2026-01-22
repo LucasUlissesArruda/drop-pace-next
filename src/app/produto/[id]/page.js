@@ -1,18 +1,17 @@
 'use client';
 import { produtos } from '@/lib/database';
 import { notFound } from 'next/navigation';
-import { useState, use } from 'react'; // 'use' é necessário para desenrolar params no Next.js 15
+import { useState, use } from 'react';
 import Image from 'next/image';
 import '../produto.css';
 import { useCart } from '@/context/CartContext';
 
 export default function ProdutoPage({ params }) {
-    // Descompactando params usando use (Padrão do Next.js 15)
     const { id } = use(params);
     const produto = produtos[id];
     
-    // Importamos a função de adicionar ao carrinho
-    const { addToCart } = useCart();
+    // Importamos a nova função aqui
+    const { addToCart, showToastWarning } = useCart();
 
     if (!produto) {
         notFound();
@@ -21,19 +20,18 @@ export default function ProdutoPage({ params }) {
     const [mainImage, setMainImage] = useState(produto.imagens[0]);
     const [activeSize, setActiveSize] = useState(null);
 
-    // Função que lida com o clique no botão
     const handleAddToCart = () => {
         if (!activeSize) {
-            alert("Por favor, selecione um tamanho antes de adicionar.");
+            // AQUI ESTÁ A MUDANÇA: Trocamos o alert pelo nosso Toast
+            showToastWarning("Por favor, selecione um tamanho.");
             return;
         }
 
-        // Criamos o objeto do produto para o carrinho
         const item = {
             id: produto.id,
             nome: produto.nome,
-            preco: produto.preco, // Nota: idealmente converter para número no futuro
-            imagem: mainImage, // Usa a imagem que está atualmente em destaque
+            preco: produto.preco,
+            imagem: mainImage,
         };
 
         addToCart(item, activeSize);
@@ -82,7 +80,7 @@ export default function ProdutoPage({ params }) {
                         <div className="cta-buttons-pdp">
                             <button 
                                 className="btn-add-to-cart"
-                                onClick={handleAddToCart} // Conectamos a função aqui
+                                onClick={handleAddToCart}
                             >
                                 Adicionar ao Carrinho
                             </button>

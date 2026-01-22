@@ -7,6 +7,9 @@ const CartContext = createContext();
 export function CartProvider({ children }) {
     const [cart, setCart] = useState([]);
     const [showOverlay, setShowOverlay] = useState(false);
+    
+    // NOVO ESTADO: Para o aviso minimalista
+    const [warning, setWarning] = useState({ visible: false, message: '' });
 
     useEffect(() => {
         if (typeof window !== 'undefined') {
@@ -23,11 +26,21 @@ export function CartProvider({ children }) {
         }
     }, [cart]);
 
+    // Animação de Sucesso (Overlay Tela Cheia)
     const triggerOverlay = () => {
         setShowOverlay(true);
         setTimeout(() => {
             setShowOverlay(false);
-        }, 1200);
+        }, 600);
+    };
+
+    // --- NOVA FUNÇÃO: Mostrar Aviso Minimalista ---
+    const showToastWarning = (message) => {
+        setWarning({ visible: true, message });
+        // Desaparece após 3 segundos
+        setTimeout(() => {
+            setWarning({ visible: false, message: '' });
+        }, 3000);
     };
 
     const addToCart = (product, size, quantity = 1) => {
@@ -57,7 +70,6 @@ export function CartProvider({ children }) {
         );
     };
 
-    // --- NOVA FUNÇÃO: LIMPAR CARRINHO ---
     const clearCart = () => {
         setCart([]);
         if (typeof window !== 'undefined') {
@@ -68,11 +80,11 @@ export function CartProvider({ children }) {
     const cartCount = cart.reduce((acc, item) => acc + item.quantity, 0);
 
     return (
-        // Adicionamos 'clearCart' aqui no value para ficar acessível
-        <CartContext.Provider value={{ cart, addToCart, removeFromCart, clearCart, cartCount }}>
+        // Adicionamos 'showToastWarning' ao contexto
+        <CartContext.Provider value={{ cart, addToCart, removeFromCart, clearCart, cartCount, showToastWarning }}>
             {children}
             
-            {/* OVERLAY DE "ADICIONADO AO CARRINHO" */}
+            {/* OVERLAY DE "ADICIONADO" (SUCESSO) */}
             <div className={`added-overlay ${showOverlay ? 'active' : ''}`}>
                 <div className="overlay-center-box">
                     <div className="bag-animation-container">
@@ -86,6 +98,13 @@ export function CartProvider({ children }) {
                     <p>Já está na tua sacola.</p>
                 </div>
             </div>
+
+            {/* NOVO: TOAST MINIMALISTA (AVISO) */}
+            <div className={`minimal-warning ${warning.visible ? 'show' : ''}`}>
+                <div className="warning-icon">!</div>
+                <span>{warning.message}</span>
+            </div>
+
         </CartContext.Provider>
     );
 }

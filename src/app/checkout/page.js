@@ -5,36 +5,57 @@ import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import Link from 'next/link';
 import './checkout.css';
+import confetti from 'canvas-confetti';
 
 export default function CheckoutPage() {
     const { cart, clearCart } = useCart();
     const router = useRouter();
     
-    // Estados para simular o processo
     const [isProcessing, setIsProcessing] = useState(false);
     const [isSuccess, setIsSuccess] = useState(false);
 
-    // Redireciona se o carrinho estiver vazio (e não for sucesso ainda)
     useEffect(() => {
         if (cart.length === 0 && !isSuccess) {
             router.push('/carrinho');
         }
     }, [cart, isSuccess, router]);
 
-    // Calcula totais
     const parseCurrency = (val) => parseFloat(val.replace('R$', '').replace(/\./g, '').replace(',', '.').trim());
     const subtotal = cart.reduce((acc, item) => acc + (parseCurrency(item.preco) * item.quantity), 0);
-    const total = subtotal; // Poderia adicionar frete aqui
+    const total = subtotal;
+
+    // --- Confete Sutil e Centralizado ---
+    const fireSubtleConfetti = () => {
+        confetti({
+            particleCount: 100,
+            spread: 70,
+            origin: { y: 0.6 },
+            colors: ['#FFD700', '#C0C0C0', '#ffffff'],
+            ticks: 200,
+            gravity: 1.2,
+            decay: 0.94,
+            startVelocity: 30,
+            disableForReducedMotion: true
+        });
+    };
 
     const handlePayment = (e) => {
         e.preventDefault();
         setIsProcessing(true);
 
-        // Simula tempo de processamento do cartão
         setTimeout(() => {
             setIsProcessing(false);
             setIsSuccess(true);
-            clearCart(); // Limpa o carrinho
+            clearCart(); 
+            fireSubtleConfetti();
+
+            // --- A CORREÇÃO MÁGICA ---
+            // Leva a tela suavemente para o topo
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+            
         }, 2000);
     };
 
@@ -49,14 +70,14 @@ export default function CheckoutPage() {
                         </svg>
                     </div>
                     <h1>Pagamento Confirmado!</h1>
-                    <p>Obrigado pela tua compra, Lucas. O teu pedido #DP-{Math.floor(Math.random() * 10000)} foi recebido.</p>
+                    <p>Obrigado pela tua compra. O teu pedido #DP-{Math.floor(Math.random() * 10000)} foi recebido e está a ser preparado.</p>
                     <Link href="/" className="btn-back-home">Voltar à Loja</Link>
                 </div>
             </div>
         );
     }
 
-    if (cart.length === 0) return null; // Evita piscar a tela antes do redirect
+    if (cart.length === 0) return null;
 
     return (
         <div className="checkout-page-wrapper">
@@ -99,6 +120,14 @@ export default function CheckoutPage() {
                                     <div className="card-mockup">
                                         <div className="card-chip"></div>
                                         <div className="card-number">•••• •••• •••• 4242</div>
+                                        <div style={{display: 'flex', justifyContent: 'space-between', marginTop: '20px', color: '#aaa', fontSize: '0.8rem'}}>
+                                            <span>Nome do Titular</span>
+                                            <span>Validade</span>
+                                        </div>
+                                        <div style={{display: 'flex', justifyContent: 'space-between', color: '#fff', fontWeight: '600'}}>
+                                            <span>LUCAS SILVA</span>
+                                            <span>12/28</span>
+                                        </div>
                                     </div>
                                     <div className="input-group">
                                         <input type="text" placeholder="Número do Cartão" required className="input-field full" />
